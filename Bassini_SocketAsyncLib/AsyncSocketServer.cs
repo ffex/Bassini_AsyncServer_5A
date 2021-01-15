@@ -15,6 +15,7 @@ namespace Bassini_SocketAsyncLib
         IPAddress mIP;
         int mPort;
         TcpListener mServer;
+        bool continua;
 
         // Mette in ascolto il server
         public async void InizioAscolto(IPAddress ipaddr = null, int port = 23000)
@@ -40,12 +41,14 @@ namespace Bassini_SocketAsyncLib
 
             //avviare il server
             mServer.Start();
+            continua = true;
+            while (continua) { 
+                // mettermi in ascolto
+                TcpClient client = await mServer.AcceptTcpClientAsync();
+                Debug.WriteLine("Client connesso: " + client.Client.RemoteEndPoint);
 
-            // mettermi in ascolto
-            TcpClient client = await mServer.AcceptTcpClientAsync();
-            Debug.WriteLine("Client connesso: " + client.Client.RemoteEndPoint);
-
-            RiceviMessaggi(client);
+                RiceviMessaggi(client);
+            }
         }
         public async void RiceviMessaggi(TcpClient client)
         {
@@ -59,11 +62,17 @@ namespace Bassini_SocketAsyncLib
                 char[] buff = new char[512];
 
                 //ricezione effettiva
-                while (true)
+                while (continua)
                 {
                     Debug.WriteLine("Pronto ad ascoltare...");
                     int nBytes = await reader.ReadAsync(buff, 0, buff.Length);
-                    Debug.WriteLine("Returned bytes:" + nBytes);
+                    if (nBytes == 0)
+                    {
+                        Debug.WriteLine("Client disconnesso.");
+                        break;
+                    }
+                    string recvMessage = new string(buff);
+                    Debug.WriteLine("Returned bytes: {0}. Messaggio: {1}",nBytes,recvMessage);
                 }
 
             }
