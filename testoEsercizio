@@ -1,0 +1,14 @@
+Esercizio TimeServer
+- Client si connette
+	- se il client mi scrive time, date -> ora,data
+	- se il client mi scrive qualsiasi altra cosa -> "Non ho capito"
+- Il server ogni 10 secondi invia a tutti i client 
+	un messaggio con formato: "dd/mm/aaaaThh:mm"
+
+COSA IMPORTANTE
+- Nuova soluzione(WPF .NET Framework) Cognome_AsyncTimeServer
+- La libreria può essere importata e 
+	si deve chiamare Cognome_SocketAsyncLib
+
+Suggerimenti
+- Controllare se il server già in ascolto
