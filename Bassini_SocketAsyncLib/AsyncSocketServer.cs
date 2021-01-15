@@ -17,6 +17,12 @@ namespace Bassini_SocketAsyncLib
         TcpListener mServer;
         bool continua;
 
+        List<TcpClient> mClients;
+        public AsyncSocketServer()
+        {
+            mClients = new List<TcpClient>();
+        }
+
         // Mette in ascolto il server
         public async void InizioAscolto(IPAddress ipaddr = null, int port = 23000)
         {
@@ -45,7 +51,10 @@ namespace Bassini_SocketAsyncLib
             while (continua) { 
                 // mettermi in ascolto
                 TcpClient client = await mServer.AcceptTcpClientAsync();
-                Debug.WriteLine("Client connesso: " + client.Client.RemoteEndPoint);
+                mClients.Add(client);
+
+                Debug.WriteLine("Client connessi: {0}. Client connesso: {1}",mClients.Count,
+                                                client.Client.RemoteEndPoint);
 
                 RiceviMessaggi(client);
             }
@@ -68,6 +77,7 @@ namespace Bassini_SocketAsyncLib
                     int nBytes = await reader.ReadAsync(buff, 0, buff.Length);
                     if (nBytes == 0)
                     {
+                        RemoveClient(client);
                         Debug.WriteLine("Client disconnesso.");
                         break;
                     }
@@ -84,5 +94,51 @@ namespace Bassini_SocketAsyncLib
 
         }
 
+        private void RemoveClient(TcpClient client)
+        {
+            if (mClients.Contains(client))
+            {
+                mClients.Remove(client);
+            }
+        }
+        public void InviaATutti(string messaggio)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(messaggio))
+                {
+                    return;
+                }
+                byte[] buff = Encoding.ASCII.GetBytes(messaggio);
+                foreach (TcpClient client in mClients)
+                {
+                    client.GetStream().WriteAsync(buff, 0, buff.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Errore: " + ex.Message);
+            }
+        }
+        public void ChiudiConnessione()
+        {
+            try
+            {
+                foreach (TcpClient client in mClients)
+                {
+                    client.Close();
+                    RemoveClient(client);
+                }
+                mServer.Stop();
+                mServer = null;
+            }
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine("Errore: " + ex.Message);
+            }
+
+        }
     }
 }
