@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bassini_AsyncServer_5A", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bassini_SocketAsyncLib", "Bassini_SocketAsyncLib\Bassini_SocketAsyncLib.csproj", "{F4C57FC4-895A-42E8-AD94-FA78FB9AF5EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{39D11087-6880-45BB-856A-202B4393F204}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F4C57FC4-895A-42E8-AD94-FA78FB9AF5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4C57FC4-895A-42E8-AD94-FA78FB9AF5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4C57FC4-895A-42E8-AD94-FA78FB9AF5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D11087-6880-45BB-856A-202B4393F204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D11087-6880-45BB-856A-202B4393F204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D11087-6880-45BB-856A-202B4393F204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D11087-6880-45BB-856A-202B4393F204}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

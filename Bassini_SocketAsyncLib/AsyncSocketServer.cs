@@ -82,6 +82,7 @@ namespace Bassini_SocketAsyncLib
                         break;
                     }
                     string recvMessage = new string(buff);
+
                     Debug.WriteLine("Returned bytes: {0}. Messaggio: {1}",nBytes,recvMessage);
                 }
 
